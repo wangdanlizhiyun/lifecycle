@@ -4,9 +4,11 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import java.util.*
@@ -40,10 +42,16 @@ object ManagerRetriever {
     }
 
     fun get(activity: Activity): Lifecycle {
+        if (Looper.getMainLooper() != Looper.myLooper()){
+            return applicationLifecycle
+        }
         return fragmentGet(activity.fragmentManager)
     }
 
     fun get(activity: FragmentActivity): Lifecycle {
+        if (Looper.getMainLooper() != Looper.myLooper()){
+            return applicationLifecycle
+        }
         return supportFragmentGet(activity.supportFragmentManager)
     }
 
@@ -65,6 +73,19 @@ object ManagerRetriever {
     }
 
 
+    fun get(fragment:Fragment): Lifecycle {
+        if (Looper.getMainLooper() != Looper.myLooper()){
+            return applicationLifecycle
+        }
+        return getSupportRequestManagerFragment(fragment.childFragmentManager).lifecycle
+    }
+    fun get(fragment:android.app.Fragment): Lifecycle {
+        if (Looper.getMainLooper() != Looper.myLooper() || Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1){
+            return applicationLifecycle
+        }else{
+            return getFragment(fragment.childFragmentManager).lifecycle
+        }
+    }
     fun supportFragmentGet(fm: FragmentManager): Lifecycle {
         return getSupportRequestManagerFragment(fm).lifecycle
     }
