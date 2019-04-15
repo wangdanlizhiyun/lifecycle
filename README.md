@@ -2,7 +2,7 @@
  
 #用法
 maven { url 'https://jitpack.io' }
-compile 'com.github.wangdanlizhiyun:lifecycle:1.0.0'
+compile 'com.github.wangdanlizhiyun:lifecycle:1.0.1'
   
   ```
   //继承 A : LifecycleListener

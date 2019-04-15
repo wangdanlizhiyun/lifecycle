@@ -6,6 +6,10 @@ import java.util.*
  * Created by 李志云 2019/4/11 15:43
  */
 class ActivityFragmentLifecycle: Lifecycle {
+    override fun getListeners(): Set<LifecycleListener> {
+        return lifecycleListeners
+    }
+
     val lifecycleListeners = Collections.newSetFromMap(WeakHashMap<LifecycleListener,Boolean>())
     var isStarted = false
     var isResumed = false
