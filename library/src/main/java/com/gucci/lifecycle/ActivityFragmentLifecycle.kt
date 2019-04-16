@@ -38,41 +38,32 @@ class ActivityFragmentLifecycle: Lifecycle {
     }
 
     fun onCreate(){
-        getSnapshot(lifecycleListeners).forEach { it.onCreate() }
+        lifecycleListeners.getSnapshot().forEach { it.onCreate() }
     }
 
     fun onResume(){
         isResumed = true
-        getSnapshot(lifecycleListeners).forEach { it.onResume() }
+        lifecycleListeners.getSnapshot().forEach { it.onResume() }
     }
 
     fun onPause(){
         isResumed = false
-        getSnapshot(lifecycleListeners).forEach { it.onPause() }
+        lifecycleListeners.getSnapshot().forEach { it.onPause() }
     }
     fun onStart(){
         isStarted = true
-        getSnapshot(lifecycleListeners).forEach { it.onStart() }
+        lifecycleListeners.getSnapshot().forEach { it.onStart() }
     }
 
     fun onStop(){
         isStarted = false
-        getSnapshot(lifecycleListeners).forEach { it.onStop() }
+        lifecycleListeners.getSnapshot().forEach { it.onStop() }
     }
 
     fun onDestory(){
         isDestroyed = true
-        getSnapshot(lifecycleListeners).forEach { it.onDestory() }
+        lifecycleListeners.getSnapshot().forEach { it.onDestory() }
         lifecycleListeners.clear()
     }
 
-    fun <T> getSnapshot(other: Collection<T>): List<T> {
-        val result = ArrayList<T>(other.size)
-        for (item in other) {
-            if (item != null) {
-                result.add(item)
-            }
-        }
-        return result
-    }
 }
