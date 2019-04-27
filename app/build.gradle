@@ -30,7 +30,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-//    implementation project(path: ':library')
-    implementation 'com.github.wangdanlizhiyun:lifecycle:1.0.0'
+    implementation project(path: ':library')
+//    implementation 'com.github.wangdanlizhiyun:lifecycle:1.0.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    implementation "org.jetbrains.anko:anko:$anko_version"
 }

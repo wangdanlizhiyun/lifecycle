@@ -2,38 +2,47 @@ package com.gucci.lifecycle.demo
 
 import android.util.Log
 import com.gucci.lifecycle.LifecycleListener
+import com.gucci.lifecycle.annotations.*
 
 /**
  * Created by 李志云 2019/4/11 22:46
  */
+
 class A : LifecycleListener {
-    override fun onStart() {
+    val b = B()
 
-        Log.e("test", "${hashCode()} onStart")
+    @OnStart
+    fun onStart() {
+        Log.e("test", "A onStart")
     }
 
-    override fun onStop() {
-        Log.e("test", "${hashCode()} onStop")
-
-    }
-
-    override fun onDestory() {
-        Log.e("test", "${hashCode()} onDestory")
-
-    }
-
-    override fun onResume() {
-        Log.e("test", "${hashCode()} onResume")
+    @OnStop
+    fun onStop() {
+        Log.e("test", "A onStop")
 
     }
 
-    override fun onCreate() {
-        Log.e("test", "${hashCode()} onCreate")
+    @OnDestory
+    fun onDestory() {
+        Log.e("test", "A onDestory")
 
     }
 
-    override fun onPause() {
-        Log.e("test", "${hashCode()} onPause")
+    @OnResume
+    fun onResume() {
+        Log.e("test", "A onResume")
+
+    }
+
+    @OnCreate
+    fun c() {
+        Log.e("test", "A onCreate")
+
+    }
+
+    @OnPause
+    fun onPause() {
+        Log.e("test", "A onPause")
 
     }
 

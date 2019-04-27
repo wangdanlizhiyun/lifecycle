@@ -2,6 +2,7 @@ package com.gucci.lifecycle
 
 import android.app.Fragment
 import android.os.Bundle
+import android.util.EventLog
 import com.gucci.lifecycle.ActivityFragmentLifecycle
 
 

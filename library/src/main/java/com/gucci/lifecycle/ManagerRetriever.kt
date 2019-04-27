@@ -2,15 +2,18 @@ package com.gucci.lifecycle
 
 import android.app.Activity
 import android.app.Application
+import android.app.Dialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
+import java.lang.Exception
 import java.util.*
 
 
@@ -20,6 +23,7 @@ import java.util.*
 object ManagerRetriever {
 
 
+    var Dialog_SHOW = -1
     val applicationLifecycle: Lifecycle = ApplicationLifecycle()
 
     val FRAG_TAG = "gucci_fragment"
@@ -42,17 +46,54 @@ object ManagerRetriever {
     }
 
     fun get(activity: Activity): Lifecycle {
-        if (Looper.getMainLooper() != Looper.myLooper()){
+        if (Looper.getMainLooper() != Looper.myLooper()) {
             return applicationLifecycle
         }
         return fragmentGet(activity.fragmentManager)
     }
 
     fun get(activity: FragmentActivity): Lifecycle {
-        if (Looper.getMainLooper() != Looper.myLooper()){
+        if (Looper.getMainLooper() != Looper.myLooper()) {
             return applicationLifecycle
         }
         return supportFragmentGet(activity.supportFragmentManager)
+    }
+
+    fun get(dialog: Dialog): Lifecycle {
+        if (Looper.getMainLooper() != Looper.myLooper()) {
+            return applicationLifecycle
+        }
+
+        val dialogClass = Class.forName("android.app.Dialog")
+        val handlerClass = Class.forName("android.os.Handler")
+
+        val mListenersHandler: Handler = InvokeUtil.getDeclaredFieldObject(dialogClass,"mListenersHandler", dialog) as Handler
+        var mCallback = InvokeUtil.getDeclaredFieldObject(handlerClass,"mCallback", mListenersHandler)
+        if (Dialog_SHOW == -1) {
+            try {
+                Dialog_SHOW =
+                    InvokeUtil.getDeclaredFieldObject(dialogClass, "SHOW", null) as Int
+            } catch (e: Exception) {
+            }
+        }
+        var hookListenersHandlerCallback: HookListenersHandlerCallback? = null
+        mCallback?.let { hookListenersHandlerCallback = mCallback as HookListenersHandlerCallback? }
+
+        hookListenersHandlerCallback?.let {
+            return it.lifecycle
+        }
+
+        hookListenersHandlerCallback = HookListenersHandlerCallback(mListenersHandler)
+        InvokeUtil.setDeclaredFieldObject(
+            handlerClass,
+            "mCallback",
+            mListenersHandler,
+            hookListenersHandlerCallback!!
+        )
+        mCallback = InvokeUtil.getDeclaredFieldObject(handlerClass,"mCallback", mListenersHandler)
+        dialog.setOnDismissListener {  }
+        dialog.setOnShowListener {  }
+        return hookListenersHandlerCallback!!.lifecycle
     }
 
     fun get(context: Context): Lifecycle {
@@ -73,19 +114,21 @@ object ManagerRetriever {
     }
 
 
-    fun get(fragment:Fragment): Lifecycle {
-        if (Looper.getMainLooper() != Looper.myLooper()){
+    fun get(fragment: Fragment): Lifecycle {
+        if (Looper.getMainLooper() != Looper.myLooper()) {
             return applicationLifecycle
         }
         return getSupportRequestManagerFragment(fragment.childFragmentManager).lifecycle
     }
-    fun get(fragment:android.app.Fragment): Lifecycle {
-        if (Looper.getMainLooper() != Looper.myLooper() || Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1){
+
+    fun get(fragment: android.app.Fragment): Lifecycle {
+        if (Looper.getMainLooper() != Looper.myLooper() || Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             return applicationLifecycle
-        }else{
+        } else {
             return getFragment(fragment.childFragmentManager).lifecycle
         }
     }
+
     fun supportFragmentGet(fm: FragmentManager): Lifecycle {
         return getSupportRequestManagerFragment(fm).lifecycle
     }
