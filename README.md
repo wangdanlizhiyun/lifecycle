@@ -1,7 +1,4 @@
-# 监听生命周期的lifecycle，使用方法比官方lifecycle简单并且支持的场景更多，
-# 支持android.app.Activity，android.app.Dialog等，
-# 支持多级组件的生命周期自动传递，子模块先执行
-# 支持自动解绑
+# 监听生命周期的lifecycle，使用方法比官方lifecycle简单并且支持的场景更多，支持android.app.Activity，android.app.Dialog等，支持多级组件的生命周期自动传递，子模块先执行，支持自动解绑
  
 #用法
 maven { url 'https://jitpack.io' }
