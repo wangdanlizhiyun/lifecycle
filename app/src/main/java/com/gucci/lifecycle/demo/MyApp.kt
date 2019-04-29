@@ -2,6 +2,8 @@ package com.gucci.lifecycle.demo
 
 import android.app.Application
 import android.content.Context
+import com.gucci.lifecycle.LifecycleListener
+import com.gucci.lifecycle.LifecycleUtil
 import com.squareup.leakcanary.LeakCanary
 
 /**
@@ -16,6 +18,8 @@ class MyApp :Application(){
             // You should not init your app in this process.
             return;
         }
-        LeakCanary.install(this);
+        LeakCanary.install(this)
+
+
     }
 }

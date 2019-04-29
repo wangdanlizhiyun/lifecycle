@@ -1,9 +1,12 @@
 package com.gucci.lifecycle
 
 import android.app.Activity
+import android.app.Application
 import android.app.Dialog
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.util.Log
 import java.util.ArrayList
 
 /**
@@ -31,6 +34,8 @@ fun LifecycleListener.watch(fragment: android.app.Fragment) {
 fun LifecycleListener.watch(dialog: Dialog) {
     ManagerRetriever.get(dialog).addListener(this)
 }
+
+
 
 //var lifecycle: Lifecycle? = null
 
