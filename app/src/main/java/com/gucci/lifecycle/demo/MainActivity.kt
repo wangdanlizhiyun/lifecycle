@@ -1,6 +1,7 @@
 package com.gucci.lifecycle.demo
 
 import android.app.Activity
+import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

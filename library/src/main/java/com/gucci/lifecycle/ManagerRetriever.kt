@@ -96,7 +96,7 @@ object ManagerRetriever {
             dialog.setOnDismissListener {  }
         }
         if (InvokeUtil.getDeclaredFieldObject("mShowMessage",dialog) == null){
-            dialog.setOnDismissListener {  }
+            dialog.setOnShowListener {  }
         }
         return hookListenersHandlerCallback!!.lifecycle
     }
