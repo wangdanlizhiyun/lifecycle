@@ -91,8 +91,13 @@ object ManagerRetriever {
             hookListenersHandlerCallback!!
         )
         mCallback = InvokeUtil.getDeclaredFieldObject(handlerClass,"mCallback", mListenersHandler)
-        dialog.setOnDismissListener {  }
-        dialog.setOnShowListener {  }
+
+        if (InvokeUtil.getDeclaredFieldObject("mDismissMessage",dialog) == null){
+            dialog.setOnDismissListener {  }
+        }
+        if (InvokeUtil.getDeclaredFieldObject("mShowMessage",dialog) == null){
+            dialog.setOnDismissListener {  }
+        }
         return hookListenersHandlerCallback!!.lifecycle
     }
 
@@ -108,6 +113,8 @@ object ManagerRetriever {
                 is ContextWrapper -> {
                     return get(context.baseContext)
                 }
+
+
             }
         }
         return applicationLifecycle

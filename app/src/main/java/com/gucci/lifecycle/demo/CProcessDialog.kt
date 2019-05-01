@@ -20,12 +20,4 @@ class CProcessDialog : ProgressDialog {
         B().watch(this)
     }
 
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
 }

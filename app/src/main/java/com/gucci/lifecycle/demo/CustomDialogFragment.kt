@@ -56,7 +56,7 @@ class CustomDialogFragment: DialogFragment() {
     }
 
     private fun init() {
-        dialog?.setCancelable(cancelOutside)
+        dialog?.setCanceledOnTouchOutside(cancelOutside)
 
         title?.let { text ->
             titleTv?.visibility = View.VISIBLE

@@ -84,7 +84,7 @@ class ActivityFragmentLifecycle : Lifecycle {
             //非ViewGroup，它的内部也可能包含ViewGroup，所以这里的代码还得递归到外面
             getAllNeedListeneredFields(lifecycleListener).forEach {
                 val bean = InvokeUtil.getDeclaredFieldObject(it, lifecycleListener)
-                if (bean is LifecycleListener) {
+                if (bean != null && bean is LifecycleListener) {
                     performChildrenAndYouSelf(bean, clazz)
                 }
             }

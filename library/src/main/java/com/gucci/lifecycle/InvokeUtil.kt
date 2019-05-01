@@ -74,19 +74,23 @@ class InvokeUtil {
             throw NoSuchMethodException("Method " + name + " with parameters " + Arrays.asList(*parameterTypes) + " not found in " + instance.javaClass)
         }
 
-        @Throws(Exception::class)
         fun getDeclaredFieldObject(clazz: Class<*>, fieldName: String, `object`: Any?): Any? {
-            val field = clazz.getDeclaredField(fieldName)
-            return getDeclaredFieldObject(field,`object`)
+            try {
+                val field = clazz.getDeclaredField(fieldName)
+                return getDeclaredFieldObject(field,`object`)
+            }catch (e:java.lang.Exception){}
+            return null
         }
         fun getDeclaredFieldObject(field:Field, `object`: Any?): Any? {
-            field.isAccessible = true
-            return field.get(`object`)
+            try {
+                field.isAccessible = true
+                return field.get(`object`)
+            }catch (e:java.lang.Exception){}
+            return null
         }
 
 
 
-        @Throws(Exception::class)
         fun getDeclaredFieldObject(fieldName: String, `object`: Any): Any? {
             return getDeclaredFieldObject(`object`::class.java, fieldName, `object`)
         }
@@ -106,18 +110,22 @@ class InvokeUtil {
         }
         @Throws(Exception::class)
         fun invoke(instance: Any?,method:Method,vararg value: Any){
+            method.isAccessible = true
             method.invoke(instance,value)
         }
         @Throws(Exception::class)
         fun invokeForResult(instance: Any?,method:Method,vararg value: Any):Any{
+            method.isAccessible = true
             return method.invoke(instance,value)
         }
         @Throws(Exception::class)
         fun invokeForResult(instance: Any?,method:Method):Any{
+            method.isAccessible = true
             return method.invoke(instance)
         }
         @Throws(Exception::class)
         fun invoke(instance: Any?,method:Method){
+            method.isAccessible = true
             method.invoke(instance)
         }
 
