@@ -6,7 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.gucci.lifecycle.watch
+import com.gucci.lifecycle.bind
 import com.lzy.download.CustomDialogFragment
 import com.lzy.download.showCustomDialog
 import org.jetbrains.anko.button
@@ -44,6 +44,6 @@ class MainActivity : AppCompatActivity() {
             {}.lparams(width = matchParent,height = 500)
         }
         mC = C()
-        A().watch(this)
+        A() bind this
     }
 }

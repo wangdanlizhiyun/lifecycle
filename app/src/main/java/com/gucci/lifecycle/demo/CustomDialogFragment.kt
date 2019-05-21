@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.gucci.lifecycle.bind
 import com.gucci.lifecycle.demo.B
 import com.gucci.lifecycle.demo.R
-import com.gucci.lifecycle.watch
 
 /**
  * Created by 李志云 2019/3/25 15:04
@@ -51,7 +51,7 @@ class CustomDialogFragment: DialogFragment() {
         rightButton = view?.findViewById(R.id.right_button)
 
         init()
-        B().watch(this)
+        B() bind this
         return view
     }
 
