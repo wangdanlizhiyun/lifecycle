@@ -2,7 +2,7 @@
  
 #用法
 maven { url 'https://jitpack.io' }
-implementation 'com.github.wangdanlizhiyun:lifecycle:1.1.4'
+implementation 'com.github.wangdanlizhiyun:lifecycle:1.1.5'
   
   ```
   让业务组件  如A继承LifecycleListener接口进行标示,用@OnCreate等注解标注要在监听到的生命周期时执行的方法，注意必须是无参方法

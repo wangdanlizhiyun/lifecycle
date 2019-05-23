@@ -19,22 +19,24 @@ import java.util.ArrayList
  * @see #watch(android.app.Dialog) 注意：监听Dialog时watch调用必须在setOnDismissListener和setOnShowListener之前，
  * 并且对于dialog而言只有oncreate和onDestroy
  */
+infix fun LifecycleListener.bind(lifecycle: Lifecycle) {
+    lifecycle.addListener(this)
+}
 infix fun LifecycleListener.bind(activity:FragmentActivity) {
-    ManagerRetriever.get(activity).addListener(this)
+    this bind ManagerRetriever.get(activity)
 }
 infix fun LifecycleListener.bind(activity: Activity) {
-    ManagerRetriever.get(activity).addListener(this)
+    this bind ManagerRetriever.get(activity)
 }
 infix fun LifecycleListener.bind(fragment: Fragment?) {
-    fragment?.let { ManagerRetriever.get(it).addListener(this) }
+    fragment?.let { this bind ManagerRetriever.get(it) }
 }
 infix fun LifecycleListener.bind(fragment: android.app.Fragment) {
-    ManagerRetriever.get(fragment).addListener(this)
+    this bind ManagerRetriever.get(fragment)
 }
 infix fun LifecycleListener.bind(dialog: Dialog) {
-    ManagerRetriever.get(dialog).addListener(this)
+    this bind ManagerRetriever.get(dialog)
 }
-
 
 
 //var lifecycle: Lifecycle? = null
