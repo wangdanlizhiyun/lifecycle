@@ -1,7 +1,9 @@
-package com.gucci.lifecycle
+package com.gucci.lifecycle.lifecycleContainer
 
 import android.os.Handler
 import android.os.Message
+import com.gucci.lifecycle.ManagerRetriever
+import com.gucci.lifecycle.lifecycle.ActivityFragmentLifecycle
 
 /**
  * Created by 李志云 2019/4/26 04:25

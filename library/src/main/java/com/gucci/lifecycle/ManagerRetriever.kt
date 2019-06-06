@@ -12,6 +12,12 @@ import android.os.Message
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.view.View
+import com.gucci.lifecycle.lifecycle.ApplicationLifecycle
+import com.gucci.lifecycle.lifecycle.Lifecycle
+import com.gucci.lifecycle.lifecycleContainer.HookListenersHandlerCallback
+import com.gucci.lifecycle.lifecycleContainer.RequestManagerFragment
+import com.gucci.lifecycle.lifecycleContainer.SupportRequestManagerFragment
+import com.gucci.lifecycle.util.InvokeUtil
 import java.lang.Exception
 import java.util.*
 
@@ -80,7 +86,8 @@ object ManagerRetriever {
             return it.lifecycle
         }
 
-        hookListenersHandlerCallback = HookListenersHandlerCallback(mListenersHandler)
+        hookListenersHandlerCallback =
+            HookListenersHandlerCallback(mListenersHandler)
         InvokeUtil.setDeclaredFieldObject(
             handlerClass,
             "mCallback",
@@ -170,7 +177,7 @@ object ManagerRetriever {
             return fragment
         }
     }
-    fun get(view: View):Lifecycle{
+    fun get(view: View): Lifecycle {
         if (Looper.getMainLooper() != Looper.myLooper()) {
             return applicationLifecycle
         }

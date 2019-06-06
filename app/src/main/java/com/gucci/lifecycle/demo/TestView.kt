@@ -5,10 +5,8 @@ import android.util.AttributeSet
 import android.util.Log
 import android.widget.TextView
 import com.gucci.lifecycle.LifecycleListener
-import com.gucci.lifecycle.annotations.OnAttachedToWindow
-import com.gucci.lifecycle.annotations.OnDetachedToWindow
-import com.gucci.lifecycle.annotations.OnPause
-import com.gucci.lifecycle.annotations.OnResume
+import com.gucci.lifecycle.TickListener
+import com.gucci.lifecycle.annotations.*
 import com.gucci.lifecycle.bind
 
 /**
@@ -47,5 +45,14 @@ class TestView: TextView {
             }
         } bind this
 
+
+        TickListener(this)
     }
+
+
+    @OnTick
+    fun doOntick(){
+        Log.e("test","doOntick")
+    }
+
 }

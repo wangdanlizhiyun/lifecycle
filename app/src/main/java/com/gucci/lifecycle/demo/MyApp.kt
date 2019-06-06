@@ -1,9 +1,6 @@
 package com.gucci.lifecycle.demo
 
 import android.app.Application
-import android.content.Context
-import com.gucci.lifecycle.LifecycleListener
-import com.gucci.lifecycle.LifecycleUtil
 import com.squareup.leakcanary.LeakCanary
 
 /**

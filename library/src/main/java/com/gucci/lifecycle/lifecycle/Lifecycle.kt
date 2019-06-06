@@ -1,6 +1,6 @@
-package com.gucci.lifecycle
+package com.gucci.lifecycle.lifecycle
 
-import java.util.*
+import com.gucci.lifecycle.LifecycleListener
 
 /**
  * Created by 李志云 2019/4/11 15:28

@@ -1,18 +1,16 @@
-package com.gucci.lifecycle
+package com.gucci.lifecycle.lifecycleContainer
 
+import android.app.Fragment
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import com.gucci.lifecycle.ActivityFragmentLifecycle
+import com.gucci.lifecycle.lifecycle.ActivityFragmentLifecycle
+
 
 /**
- * Created by 李志云 2019/4/11 17:02
+ * Created by 李志云 2019/4/11 16:49
  */
-class SupportRequestManagerFragment : Fragment() {
+class RequestManagerFragment : Fragment() {
+
     val lifecycle = ActivityFragmentLifecycle()
-    override fun onDestroy() {
-        super.onDestroy()
-        lifecycle.onDestory()
-    }
 
     override fun onStart() {
         super.onStart()
@@ -22,6 +20,11 @@ class SupportRequestManagerFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         lifecycle.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        lifecycle.onDestory()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

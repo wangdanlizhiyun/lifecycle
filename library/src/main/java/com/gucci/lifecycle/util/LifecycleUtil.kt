@@ -1,9 +1,10 @@
-package com.gucci.lifecycle
+package com.gucci.lifecycle.util
 
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.util.Log
+import com.gucci.lifecycle.LifecycleListener
 import com.gucci.lifecycle.annotations.*
 import java.lang.Exception
 import java.lang.reflect.Field
@@ -22,7 +23,7 @@ class LifecycleUtil {
                         try {
                             InvokeUtil.invoke(lifecycleListener, method)
                         }catch (e:Exception){
-                            Log.e("test",e.message)
+                            e.printStackTrace()
                         }
                     }
                 }
@@ -58,11 +59,11 @@ class LifecycleUtil {
         fun init(application: Application){
             application.registerActivityLifecycleCallbacks(object :Application.ActivityLifecycleCallbacks{
                 override fun onActivityPaused(activity: Activity) {
-                    dispatchAction(activity,OnPause::class.java)
+                    dispatchAction(activity, OnPause::class.java)
                 }
 
                 override fun onActivityResumed(activity: Activity) {
-                    dispatchAction(activity,OnResume::class.java)
+                    dispatchAction(activity, OnResume::class.java)
                 }
 
                 override fun onActivityStarted(activity: Activity) {
@@ -70,18 +71,18 @@ class LifecycleUtil {
                 }
 
                 override fun onActivityDestroyed(activity: Activity) {
-                    dispatchAction(activity,OnDestory::class.java)
+                    dispatchAction(activity, OnDestory::class.java)
                 }
 
                 override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
                 }
 
                 override fun onActivityStopped(activity: Activity) {
-                    dispatchAction(activity,OnStop::class.java)
+                    dispatchAction(activity, OnStop::class.java)
                 }
 
                 override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                    dispatchAction(activity,OnCreate::class.java)
+                    dispatchAction(activity, OnCreate::class.java)
                 }
 
             })
@@ -92,6 +93,21 @@ class LifecycleUtil {
                 val bean = InvokeUtil.getDeclaredFieldObject(it, any)
                 if (bean is LifecycleListener) {
                     doAction(bean, clazz)
+                }
+            }
+        }
+
+        fun doActionOnOnlyItself(any: Any, clazz: Class<out Annotation>) {
+
+            any.javaClass.declaredMethods.forEach { method ->
+                method.getAnnotation(clazz)?.let {
+                    if (method.getParameterTypes().size == 0) {
+                        try {
+                            InvokeUtil.invoke(any, method)
+                        }catch (e:Exception){
+                            e.printStackTrace()
+                        }
+                    }
                 }
             }
         }

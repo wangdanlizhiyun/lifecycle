@@ -1,6 +1,8 @@
-package com.gucci.lifecycle
+package com.gucci.lifecycle.lifecycle
 
+import com.gucci.lifecycle.LifecycleListener
 import com.gucci.lifecycle.annotations.OnStart
+import com.gucci.lifecycle.util.LifecycleUtil
 import java.util.*
 
 /**

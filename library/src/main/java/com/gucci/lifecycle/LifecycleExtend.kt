@@ -1,15 +1,14 @@
 package com.gucci.lifecycle
 
 import android.app.Activity
-import android.app.Application
 import android.app.Dialog
-import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
-import android.util.Log
 import android.view.View
 import com.gucci.lifecycle.annotations.OnAttachedToWindow
 import com.gucci.lifecycle.annotations.OnDetachedToWindow
+import com.gucci.lifecycle.lifecycle.Lifecycle
+import com.gucci.lifecycle.util.LifecycleUtil
 import java.util.ArrayList
 
 /**

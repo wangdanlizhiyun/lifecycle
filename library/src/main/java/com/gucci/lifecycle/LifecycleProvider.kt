@@ -5,6 +5,7 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
+import com.gucci.lifecycle.util.LifecycleUtil
 
 /**
  * Created by 李志云 2019/6/7 03:55

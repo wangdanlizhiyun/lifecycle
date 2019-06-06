@@ -1,4 +1,4 @@
-package com.gucci.lifecycle
+package com.gucci.lifecycle.util
 
 import java.lang.reflect.Field
 import java.lang.reflect.Method
@@ -77,7 +77,7 @@ class InvokeUtil {
         fun getDeclaredFieldObject(clazz: Class<*>, fieldName: String, `object`: Any?): Any? {
             try {
                 val field = clazz.getDeclaredField(fieldName)
-                return getDeclaredFieldObject(field,`object`)
+                return getDeclaredFieldObject(field, `object`)
             }catch (e:java.lang.Exception){}
             return null
         }
@@ -92,7 +92,11 @@ class InvokeUtil {
 
 
         fun getDeclaredFieldObject(fieldName: String, `object`: Any): Any? {
-            return getDeclaredFieldObject(`object`::class.java, fieldName, `object`)
+            return getDeclaredFieldObject(
+                `object`::class.java,
+                fieldName,
+                `object`
+            )
         }
 
         @Throws(Exception::class)

@@ -1,9 +1,12 @@
-package com.gucci.lifecycle
+package com.gucci.lifecycle.lifecycle
 
 import android.view.ViewGroup
-import com.gucci.lifecycle.LifecycleUtil.Companion.doAction
-import com.gucci.lifecycle.LifecycleUtil.Companion.getAllNeedListeneredFields
+import com.gucci.lifecycle.LifecycleListener
+import com.gucci.lifecycle.util.LifecycleUtil.Companion.doAction
+import com.gucci.lifecycle.util.LifecycleUtil.Companion.getAllNeedListeneredFields
 import com.gucci.lifecycle.annotations.*
+import com.gucci.lifecycle.getSnapshot
+import com.gucci.lifecycle.util.InvokeUtil
 import java.util.*
 
 /**
