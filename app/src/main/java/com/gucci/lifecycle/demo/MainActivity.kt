@@ -6,23 +6,25 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.LinearLayout
 import com.gucci.lifecycle.bind
 import com.lzy.download.CustomDialogFragment
 import com.lzy.download.showCustomDialog
-import org.jetbrains.anko.button
-import org.jetbrains.anko.matchParent
+import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
-import org.jetbrains.anko.verticalLayout
 
 class MainActivity : AppCompatActivity() {
     lateinit var that:Activity
     lateinit var mCustomVideoView:CustomVideoView
     var dialogFragment : CustomDialogFragment? = null
     lateinit var mC:C
+    lateinit var mLl:LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         that = this
-        verticalLayout {
+        val testView = TestView(this)
+        mLl = verticalLayout {
+
             button("showDialogFragment"){
                 onClick {
                     if (dialogFragment == null){
@@ -40,8 +42,19 @@ class MainActivity : AppCompatActivity() {
                     CProcessDialog(that).show()
                 }
             }
-            mCustomVideoView = customVideoView(Uri.parse("http://tb-video.bdstatic.com/tieba-smallvideo-transcode/10923707_80db72f5f649f4c0dc62c8520184d3d7_0.mp4"))
-            {}.lparams(width = matchParent,height = 500)
+//            mCustomVideoView = customVideoView(Uri.parse("http://tb-video.bdstatic.com/tieba-smallvideo-transcode/10923707_80db72f5f649f4c0dc62c8520184d3d7_0.mp4"))
+//            {}.lparams(width = matchParent,height = 500)
+
+            button("addView"){
+                onClick {
+                    mLl.addView(testView)
+                }
+            }
+            button("deleteView"){
+                onClick {
+                    mLl.removeView(testView)
+                }
+            }
         }
         mC = C()
         A() bind this

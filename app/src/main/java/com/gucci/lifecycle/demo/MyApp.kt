@@ -21,6 +21,5 @@ class MyApp :Application(){
         LeakCanary.install(this)
 
 
-        LifecycleUtil.init(this)
     }
 }

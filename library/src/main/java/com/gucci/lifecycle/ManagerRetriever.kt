@@ -11,6 +11,7 @@ import android.os.Looper
 import android.os.Message
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.view.View
 import java.lang.Exception
 import java.util.*
 
@@ -109,8 +110,6 @@ object ManagerRetriever {
                 is ContextWrapper -> {
                     return get(context.baseContext)
                 }
-
-
             }
         }
         return applicationLifecycle
@@ -170,5 +169,11 @@ object ManagerRetriever {
         } else {
             return fragment
         }
+    }
+    fun get(view: View):Lifecycle{
+        if (Looper.getMainLooper() != Looper.myLooper()) {
+            return applicationLifecycle
+        }
+        return get(view.context)
     }
 }

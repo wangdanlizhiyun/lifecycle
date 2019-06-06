@@ -9,7 +9,7 @@ import java.util.*
 /**
  * Created by 李志云 2019/4/11 15:43
  */
-class ActivityFragmentLifecycle : Lifecycle {
+open class ActivityFragmentLifecycle : Lifecycle {
     override fun getListeners(): Set<LifecycleListener> {
         return lifecycleListeners
     }

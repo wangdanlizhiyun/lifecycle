@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.util.Log
+import android.view.View
+import com.gucci.lifecycle.annotations.OnAttachedToWindow
+import com.gucci.lifecycle.annotations.OnDetachedToWindow
 import java.util.ArrayList
 
 /**
@@ -36,6 +39,19 @@ infix fun LifecycleListener.bind(fragment: android.app.Fragment) {
 }
 infix fun LifecycleListener.bind(dialog: Dialog) {
     this bind ManagerRetriever.get(dialog)
+}
+infix fun LifecycleListener.bind(view: View) {
+    val onAttachStateChangeListener = object :View.OnAttachStateChangeListener{
+        override fun onViewDetachedFromWindow(v: View?) {
+            LifecycleUtil.doAction(this@bind, OnDetachedToWindow::class.java)
+        }
+
+        override fun onViewAttachedToWindow(v: View?) {
+            LifecycleUtil.doAction(this@bind, OnAttachedToWindow::class.java)
+        }
+    }
+    view.addOnAttachStateChangeListener(onAttachStateChangeListener)
+    this bind ManagerRetriever.get(view)
 }
 
 
