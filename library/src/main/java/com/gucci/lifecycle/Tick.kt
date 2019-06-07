@@ -7,7 +7,7 @@ import com.gucci.lifecycle.util.LifecycleUtil
 /**
  * Created by 李志云 2019/6/7 05:18
  */
-class TickListener(private val view: View):LifecycleListener {
+class Tick(private val view: View):LifecycleListener {
     private lateinit var mTickRunnable:Runnable
     init {
         mTickRunnable = Runnable {
@@ -18,21 +18,23 @@ class TickListener(private val view: View):LifecycleListener {
         this bind view
     }
 
-    @OnResume
-    fun doOnResume(){
+    @OnStart
+    fun doOnStart(){
         if (view.parent == null)return
         view.removeCallbacks(mTickRunnable)
+        LifecycleUtil.doActionOnOnlyItself(view,OnTick::class.java)
         view.postDelayed(mTickRunnable,1000)
     }
 
-    @OnPause
-    fun doOnPause(){
+    @OnStop
+    fun doOnStop(){
         view.removeCallbacks(mTickRunnable)
     }
 
     @OnAttachedToWindow
     fun doOnAttachedToWindow(){
         view.removeCallbacks(mTickRunnable)
+        LifecycleUtil.doActionOnOnlyItself(view,OnTick::class.java)
         view.postDelayed(mTickRunnable,1000)
     }
     @OnDetachedToWindow

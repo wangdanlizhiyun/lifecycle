@@ -52,6 +52,9 @@ infix fun LifecycleListener.bind(view: View) {
     view.addOnAttachStateChangeListener(onAttachStateChangeListener)
     this bind ManagerRetriever.get(view)
 }
+fun View.tick() {
+    Tick(this)
+}
 
 
 //var lifecycle: Lifecycle? = null
