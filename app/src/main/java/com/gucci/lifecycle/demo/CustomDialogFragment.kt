@@ -11,9 +11,6 @@ import com.gucci.lifecycle.bind
 import com.gucci.lifecycle.demo.B
 import com.gucci.lifecycle.demo.R
 
-/**
- * Created by 李志云 2019/3/25 15:04
- */
 class CustomDialogFragment: DialogFragment() {
     private var titleTv:TextView? = null
     private var messageTv:TextView? = null

@@ -21,10 +21,6 @@ import com.gucci.lifecycle.util.InvokeUtil
 import java.lang.Exception
 import java.util.*
 
-
-/**
- * Created by 李志云 2019/4/11 15:25
- */
 object ManagerRetriever {
     var Dialog_SHOW = -1
     val applicationLifecycle: Lifecycle = ApplicationLifecycle()

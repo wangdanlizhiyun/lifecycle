@@ -2,7 +2,7 @@
  
 #用法
 maven { url 'https://jitpack.io' }
-implementation 'com.github.wangdanlizhiyun:lifecycle:2.0.1'
+implementation 'com.github.wangdanlizhiyun:lifecycle:3.0.0'
   
   ```
   让业务组件  如A继承LifecycleListener接口进行标示,用@OnCreate等注解标注要在监听到的生命周期时执行的方法，注意必须是无参方法
@@ -26,6 +26,6 @@ implementation 'com.github.wangdanlizhiyun:lifecycle:2.0.1'
     两种情况可以同时存在并且多层嵌套
    
   ```
-  ###TODO：1.免除其他场景的 bind 方法调用 2.链式调用简单支持
+  ###TODO：1.免除其他场景的 bind 方法调用 
     
  

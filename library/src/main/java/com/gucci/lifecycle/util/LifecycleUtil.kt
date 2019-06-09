@@ -9,9 +9,7 @@ import com.gucci.lifecycle.annotations.*
 import java.lang.Exception
 import java.lang.reflect.Field
 
-/**
- * Created by 李志云 2019/4/28 03:31
- */
+
 class LifecycleUtil {
 
     companion object {

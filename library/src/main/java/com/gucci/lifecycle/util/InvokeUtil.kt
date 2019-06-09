@@ -4,9 +4,7 @@ import java.lang.reflect.Field
 import java.lang.reflect.Method
 import java.util.*
 
-/**
- * Created by 李志云 2018/10/3 23:01
- */
+
 class InvokeUtil {
     companion object {
 

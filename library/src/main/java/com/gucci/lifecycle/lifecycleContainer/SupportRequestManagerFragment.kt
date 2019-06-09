@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.gucci.lifecycle.lifecycle.ActivityFragmentLifecycle
 
-/**
- * Created by 李志云 2019/4/11 17:02
- */
 class SupportRequestManagerFragment : Fragment() {
     val lifecycle = ActivityFragmentLifecycle()
     override fun onDestroy() {

@@ -5,9 +5,6 @@ import android.os.Bundle
 import com.gucci.lifecycle.lifecycle.ActivityFragmentLifecycle
 
 
-/**
- * Created by 李志云 2019/4/11 16:49
- */
 class RequestManagerFragment : Fragment() {
 
     val lifecycle = ActivityFragmentLifecycle()

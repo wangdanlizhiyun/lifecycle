@@ -4,9 +4,6 @@ import android.util.Log
 import com.gucci.lifecycle.LifecycleListener
 import com.gucci.lifecycle.annotations.*
 
-/**
- * Created by 李志云 2019/4/11 22:46
- */
 class B : LifecycleListener {
     @OnStart fun onStart() {
 

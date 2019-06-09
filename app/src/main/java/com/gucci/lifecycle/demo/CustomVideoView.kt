@@ -12,10 +12,6 @@ import com.gucci.lifecycle.LifecycleListener
 import com.gucci.lifecycle.annotations.*
 import org.jetbrains.anko.custom.ankoView
 
-/**
- * Created by 李志云 2019/5/1 21:36
- * 坑逼videoview内部有泄漏
- */
 class CustomVideoView: VideoView,LifecycleListener {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)

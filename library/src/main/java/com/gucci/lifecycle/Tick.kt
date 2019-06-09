@@ -4,9 +4,7 @@ import android.view.View
 import com.gucci.lifecycle.annotations.*
 import com.gucci.lifecycle.util.LifecycleUtil
 
-/**
- * Created by 李志云 2019/6/7 05:18
- */
+
 class Tick(private val view: View):LifecycleListener {
     private lateinit var mTickRunnable:Runnable
     init {

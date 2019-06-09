@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import android.widget.LinearLayout
 import com.gucci.lifecycle.bind
 import com.lzy.download.CustomDialogFragment
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        mLl.visibility = View.VISIBLE
         mC = C()
         A() bind this
     }

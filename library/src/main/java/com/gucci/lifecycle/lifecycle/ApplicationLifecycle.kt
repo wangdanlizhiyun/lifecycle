@@ -6,7 +6,6 @@ import com.gucci.lifecycle.util.LifecycleUtil
 import java.util.*
 
 /**
- * Created by 李志云 2019/4/11 16:31
  * 留待拆解glide使用
  */
 class ApplicationLifecycle : Lifecycle {

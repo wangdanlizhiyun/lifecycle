@@ -7,9 +7,7 @@ import android.widget.TextView
 import com.gucci.lifecycle.annotations.OnTick
 import com.gucci.lifecycle.tick
 
-/**
- * Created by 李志云 2019/6/4 00:50
- */
+
 class TestView: TextView {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
