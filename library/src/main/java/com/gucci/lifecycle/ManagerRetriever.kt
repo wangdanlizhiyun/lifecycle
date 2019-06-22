@@ -1,16 +1,15 @@
 package com.gucci.lifecycle
 
+import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Application
 import android.app.Dialog
 import android.content.Context
 import android.content.ContextWrapper
-import android.os.Build
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
+import android.os.*
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.support.v4.util.ArrayMap
 import android.view.View
 import com.gucci.lifecycle.lifecycle.ApplicationLifecycle
 import com.gucci.lifecycle.lifecycle.Lifecycle
@@ -24,7 +23,10 @@ import java.util.*
 object ManagerRetriever {
     var Dialog_SHOW = -1
     val applicationLifecycle: Lifecycle = ApplicationLifecycle()
-
+    private val tempViewToSupportFragment = ArrayMap<View, Fragment>()
+    private val tempViewToFragment = ArrayMap<View, android.app.Fragment>()
+    private val tempBundle = Bundle()
+    private val FRAGMENT_INDEX_KEY = "key"
     val FRAG_TAG = "gucci_fragment"
     val ID_REMOVE_SUPPORT_FRAGMENT_MANAGER = 1
     val ID_REMOVE_FRAGMENT_MANAGER = 2
@@ -173,10 +175,124 @@ object ManagerRetriever {
             return fragment
         }
     }
+    private fun findActivity(context: Context): Activity? {
+        return context as? Activity ?: if (context is ContextWrapper) {
+            findActivity(context.baseContext)
+        } else {
+            null
+        }
+    }
     fun get(view: View): Lifecycle {
         if (Looper.getMainLooper() != Looper.myLooper()) {
             return applicationLifecycle
         }
-        return get(view.context)
+        val activity = findActivity(view.context) ?: return get(view.context.applicationContext)
+        if (activity is FragmentActivity) {
+            val fragment = findSupportFragment(view, activity)
+            return fragment?.let { get(it) } ?: get(activity)
+        }
+        // Standard Fragments.
+        val fragment = findFragment(view, activity) ?: return get(activity)
+        return get(fragment)
+    }
+    private fun findFragment(target: View, activity: Activity): android.app.Fragment? {
+        tempViewToFragment.clear()
+        findAllFragmentsWithViews(activity.fragmentManager, tempViewToFragment)
+        var result: android.app.Fragment? = null
+        val activityRoot = activity.findViewById<View>(android.R.id.content)
+        var current = target
+        while (current != activityRoot) {
+            result = tempViewToFragment.get(current)
+            if (result != null) {
+                break
+            }
+            if (current.parent is View) {
+                current = current.parent as View
+            } else {
+                break
+            }
+        }
+        tempViewToFragment.clear()
+        return result
+    }
+    @TargetApi(Build.VERSION_CODES.O)
+    private fun findAllFragmentsWithViews(
+        fragmentManager: android.app.FragmentManager, result: ArrayMap<View, android.app.Fragment>
+    ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            for (fragment in fragmentManager.fragments) {
+                if (fragment.view != null) {
+                    result[fragment.view] = fragment
+                    findAllFragmentsWithViews(fragment.childFragmentManager, result)
+                }
+            }
+        } else {
+            findAllFragmentsWithViewsPreO(fragmentManager, result)
+        }
+    }
+    private fun findAllFragmentsWithViewsPreO(
+        fragmentManager: android.app.FragmentManager, result: ArrayMap<View, android.app.Fragment>
+    ) {
+        var index = 0
+        while (true) {
+            tempBundle.putInt(FRAGMENT_INDEX_KEY, index++)
+            var fragment: android.app.Fragment? = null
+            try {
+                fragment = fragmentManager.getFragment(tempBundle, FRAGMENT_INDEX_KEY)
+            } catch (e: Exception) {
+                // This generates log spam from FragmentManager anyway.
+            }
+
+            if (fragment == null) {
+                break
+            }
+            if (fragment.view != null) {
+                result[fragment.view] = fragment
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    findAllFragmentsWithViews(fragment.childFragmentManager, result)
+                }
+            }
+        }
+    }
+
+    private fun findSupportFragment(target: View, activity: FragmentActivity): Fragment? {
+        tempViewToSupportFragment.clear()
+        findAllSupportFragmentsWithViews(
+            activity.supportFragmentManager.fragments, tempViewToSupportFragment
+        )
+        var result: Fragment? = null
+        val activityRoot = activity.findViewById<View>(android.R.id.content)
+        var current = target
+        while (current != activityRoot) {
+            result = tempViewToSupportFragment[current]
+            if (result != null) {
+                break
+            }
+            if (current.parent is View) {
+                current = current.parent as View
+            } else {
+                break
+            }
+        }
+
+        tempViewToSupportFragment.clear()
+        return result
+    }
+    private fun findAllSupportFragmentsWithViews(
+        topLevelFragments: Collection<Fragment>?,
+        result: MutableMap<View, Fragment>
+    ) {
+        if (topLevelFragments == null) {
+            return
+        }
+        for (fragment in topLevelFragments) {
+            fragment?.also {
+                it.view?.let{view->
+                    result[view] = fragment
+                    findAllSupportFragmentsWithViews(fragment.childFragmentManager.fragments, result)
+                }
+            }
+
+        }
     }
 }
