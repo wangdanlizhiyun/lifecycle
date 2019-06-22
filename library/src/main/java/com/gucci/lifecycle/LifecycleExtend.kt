@@ -20,31 +20,37 @@ import java.util.*
  * @see #watch(android.app.Dialog) 注意：监听Dialog时watch调用必须在setOnDismissListener和setOnShowListener之前，
  * 并且对于dialog而言只有oncreate和onDestroy
  */
-infix fun LifecycleListener.bind(lifecycle: Lifecycle) {
+infix fun LifecycleListener.bind(lifecycle: Lifecycle):LifecycleListener {
     lifecycle.addListener(this)
+    return this
 }
 
-infix fun LifecycleListener.bind(activity: FragmentActivity) {
+infix fun LifecycleListener.bind(activity: FragmentActivity):LifecycleListener {
     this bind ManagerRetriever.get(activity)
+    return this
 }
 
-infix fun LifecycleListener.bind(activity: Activity) {
+infix fun LifecycleListener.bind(activity: Activity):LifecycleListener {
     this bind ManagerRetriever.get(activity)
+    return this
 }
 
-infix fun LifecycleListener.bind(fragment: Fragment?) {
+infix fun LifecycleListener.bind(fragment: Fragment?):LifecycleListener {
     fragment?.let { this bind ManagerRetriever.get(it) }
+    return this
 }
 
-infix fun LifecycleListener.bind(fragment: android.app.Fragment) {
+infix fun LifecycleListener.bind(fragment: android.app.Fragment):LifecycleListener {
     this bind ManagerRetriever.get(fragment)
+    return this
 }
 
-infix fun LifecycleListener.bind(dialog: Dialog) {
+infix fun LifecycleListener.bind(dialog: Dialog):LifecycleListener {
     this bind ManagerRetriever.get(dialog)
+    return this
 }
 
-infix fun LifecycleListener.bind(view: View) {
+infix fun LifecycleListener.bind(view: View):LifecycleListener {
     val onAttachStateChangeListener = object : View.OnAttachStateChangeListener {
         override fun onViewDetachedFromWindow(v: View?) {
             LifecycleUtil.doAction(this@bind, OnDetachedToWindow::class.java)
@@ -56,6 +62,7 @@ infix fun LifecycleListener.bind(view: View) {
     }
     view.addOnAttachStateChangeListener(onAttachStateChangeListener)
     this bind ManagerRetriever.get(view)
+    return this
 }
 
 fun View.tick() {
