@@ -1,6 +1,7 @@
 package com.gucci.lifecycle.lifecycleContainer
 
 import android.app.Fragment
+import android.content.Context
 import android.os.Bundle
 import com.gucci.lifecycle.lifecycle.ActivityFragmentLifecycle
 
@@ -8,6 +9,7 @@ import com.gucci.lifecycle.lifecycle.ActivityFragmentLifecycle
 class RequestManagerFragment : Fragment() {
 
     val lifecycle = ActivityFragmentLifecycle()
+
 
     override fun onStart() {
         super.onStart()
@@ -38,4 +40,13 @@ class RequestManagerFragment : Fragment() {
         super.onResume()
         lifecycle.onResume()
     }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+    }
+
 }
